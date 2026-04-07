@@ -1,0 +1,15 @@
+services:
+  mirrorbase:
+    build: .
+    ports:
+      - "8100:8100"       # REST API
+      - "6000-6099:6000-6099"  # Clone Postgres ports
+    volumes:
+      - mirrorbase-data:/data/mirrorbase
+    environment:
+      - MIRRORBASE_HOME=/data/mirrorbase
+      - MIRRORBASE_PORT=8100
+    restart: unless-stopped
+
+volumes:
+  mirrorbase-data:

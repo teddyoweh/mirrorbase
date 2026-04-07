@@ -1,0 +1,27 @@
+services:
+  mirrorbase:
+    build: ..
+    ports:
+      - "8100:8100"
+      - "6000-6099:6000-6099"
+    volumes:
+      - mirrorbase-data:/data/mirrorbase
+      - ./certs:/certs:ro
+    environment:
+      - MIRRORBASE_API_KEY=${MIRRORBASE_API_KEY}
+      - MIRRORBASE_ENCRYPTION_KEY=${MIRRORBASE_ENCRYPTION_KEY}
+      - MIRRORBASE_ALLOWED_ORIGINS=https://spawnlabs.ai,https://app.spawnlabs.ai
+      - MIRRORBASE_TLS_CERT=/certs/fullchain.pem
+      - MIRRORBASE_TLS_KEY=/certs/privkey.pem
+      - MIRRORBASE_HOME=/data/mirrorbase
+      - MIRRORBASE_PORT_START=6000
+      - MIRRORBASE_PORT_END=6099
+      - MIRRORBASE_RATE_LIMIT=300
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+
+volumes:
+  mirrorbase-data:
