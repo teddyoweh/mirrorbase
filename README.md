@@ -260,4 +260,8 @@ python demos/08_advanced_queries.py "postgresql://..."
 
 ## License
 
-MIT
+[Business Source License 1.1](LICENSE)
+
+Free for non-commercial use. For commercial/enterprise use, contact enterprise@spawnlabs.ai.
+
+Converts to Apache 2.0 after 4 years.

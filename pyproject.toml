@@ -7,7 +7,7 @@ name = "mirrorbase"
 version = "0.1.0"
 description = "Instant live clones of Postgres databases. Paste a URL, get a writable fork in seconds."
 readme = "README.md"
-license = "MIT"
+license = "BSL-1.1"
 requires-python = ">=3.10"
 authors = [
     { name = "Teddy Oweh" },
