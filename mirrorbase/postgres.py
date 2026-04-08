@@ -57,7 +57,7 @@ class LocalPostgres:
         existing = conf_path.read_text()
         overrides = f"""
 # === MirrorBase overrides ===
-listen_addresses = 'localhost'
+listen_addresses = '*'
 port = {self.port}
 unix_socket_directories = '{self.socket_dir}'
 
@@ -86,10 +86,12 @@ log_min_messages = warning
     def _write_pg_hba_conf(self):
         hba_path = self.data_dir / "pg_hba.conf"
         hba_path.write_text(
-            "# MirrorBase: trust all local connections\n"
+            "# MirrorBase\n"
             "local   all             all                     trust\n"
             "host    all             all     127.0.0.1/32    trust\n"
             "host    all             all     ::1/128         trust\n"
+            "host    all             all     0.0.0.0/0       scram-sha-256\n"
+            "host    all             all     ::/0            scram-sha-256\n"
             "local   replication     all                     trust\n"
             "host    replication     all     127.0.0.1/32    trust\n"
             "host    replication     all     ::1/128         trust\n"
