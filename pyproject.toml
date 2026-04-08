@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mirrorbase"
-version = "0.1.0"
+version = "0.1.1"
 description = "Instant live clones of Postgres databases. Paste a URL, get a writable fork in seconds."
 readme = "README.md"
 license = "LicenseRef-BSL-1.1"

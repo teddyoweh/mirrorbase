@@ -148,14 +148,21 @@ def _detect_cow_method() -> str:
         except Exception:
             pass
 
-        # Check XFS reflinks (cp --reflink=always)
+        # Check XFS/ext4 reflinks — actually test on the real filesystem
         try:
+            import tempfile
+            test_dir = MIRRORBASE_HOME if MIRRORBASE_HOME.exists() else Path(tempfile.gettempdir())
+            src = test_dir / ".mirrorbase_reflink_test"
+            dst = test_dir / ".mirrorbase_reflink_test2"
+            src.write_text("test")
             result = subprocess.run(
-                ["cp", "--reflink=always", "/dev/null", "/dev/null"],
+                ["cp", "--reflink=always", str(src), str(dst)],
                 capture_output=True, text=True,
             )
-            # If the command doesn't error on the concept, reflinks might work
-            return "reflink"
+            src.unlink(missing_ok=True)
+            dst.unlink(missing_ok=True)
+            if result.returncode == 0:
+                return "reflink"
         except Exception:
             pass
 
